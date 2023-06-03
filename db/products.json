@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "1",
     "name": "Burger Tsar",
     "products": [
       {
@@ -41,7 +41,7 @@
     ]
   },
   {
-    "id": 2,
+    "id": "2",
     "name": "McDowell's",
     "products": [
       {
@@ -82,7 +82,7 @@
     ]
   },
   {
-    "id": 3,
+    "id": "3",
     "name": "Subway Surfers",
     "products": [
       {
@@ -123,7 +123,7 @@
     ]
   },
   {
-    "id": 4,
+    "id": "4",
     "name": "Pizza Portal",
     "products": [
       {
@@ -164,7 +164,7 @@
     ]
   },
   {
-    "id": 5,
+    "id": "5",
     "name": "Pasta Portal",
     "products": [
       {
