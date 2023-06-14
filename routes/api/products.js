@@ -29,9 +29,14 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-// router.post("/:id", (req, res) => {
-//   const { id } = req.params;
-// });
+router.post("/", async (req, res, next) => {
+  try {
+    const results = await productsModel.addProduct(req.body)
+    res.status(201).json(results)
+  } catch (error) {
+    next(error)
+  }
+});
 
 // router.delete("/:id", (req, res) => {
 //   const { id } = req.params;
