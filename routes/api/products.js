@@ -8,6 +8,7 @@ const router = express.Router(); //Router() - для створення моду
 
 const productSchema = Joi.object({
     name: Joi.string().required(),
+    products: Joi.string().required(),
     description: Joi.string().required(),
     price: Joi.number().required(),
 });
@@ -50,12 +51,35 @@ router.post("/", async (req, res, next) => {
     }
 });
 
-// router.delete("/:id", (req, res) => {
-//   const { id } = req.params;
+router.put("/:id", async (req, res, next) => {
+    try {
+        const { error } = productSchema.validate(req.body);
+        if (error) {
+            throw createError(400, error.message);
+        }
 
-//   const data = dataProduc.filter((item) => item.id !== Number(id));
-//   console.log(data);
-//   res.json(data);
-// });
+        const { id } = req.params;
+        const result = await productsModel.updateById(id, req.body);
+        if (!result) {
+            throw createError(400);
+        }
+        res.json(result);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.delete("/:id", async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const result = await productsModel.removeById(id);
+        if (!result) {
+            throw createError(404);
+        }
+        res.json({ message: "Product deleted" });
+    } catch (error) {
+        next(error);
+    }
+});
 
 module.exports = router;
