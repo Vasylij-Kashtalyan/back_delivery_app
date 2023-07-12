@@ -2,6 +2,9 @@ const express = require("express"); // екземпляр express програм
 const logger = require("morgan");
 const cors = require("cors"); // cors - для запитів з ішого браузера
 
+const dotenv = require("dotenv");
+dotenv.config();
+
 const productRouter = require("./routes/api/products");
 
 const app = express();
