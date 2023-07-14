@@ -1,92 +1,21 @@
 const express = require("express");
-const Joi = require("joi");
 
-const Product = require("../../models/product");
+const control = require("../../controllers/products/index");
 
-const { createError } = require("../../helpers");
+const { ctrlWraper } = require("../../helpers"); // обгортка try catch
 
 const router = express.Router(); //Router() - для створення модульних,монтованих обробників маршрутів
 
-const productAddSchema = Joi.object({
-    name: Joi.string().required(),
+router.get("/", ctrlWraper(control.getAll));
 
-    products: Joi.array().required([
-        {
-            id: Joi.string().required(),
-            name: Joi.string().required(),
-            description: Joi.string().required(),
-            price: Joi.number().required(),
-        },
-    ]),
-});
+router.get("/:id", control.getById);
 
-// router.get("/", async (req, res, next) => {
-// try {
-// const result = await productsModel.getAll();
-// res.json(result);
-// } catch (error) {
-// next(error);
-// }
-// });
+router.post("/", control.addProduct);
 
-// router.get("/:id", async (req, res, next) => {
-// try {
-// const { id } = req.params;
-// const result = await productsModel.getById(id);
-//
-// if (!result) {
-// throw createError(404);
-// }
-//
-// res.json(result);
-// } catch (error) {
-// next(error);
-// }
-// });
+router.put("/:id", control.updateById);
 
-router.post("/", async (req, res, next) => {
-    try {
-        const { error } = productAddSchema.validate(req.body);
-        if (error) {
-            throw createError(400, error.message);
-        }
+router.patch("/:id/price", control.updatePrice);
 
-        const results = await Product.create(req.body);
-        res.status(201).json(results);
-    } catch (error) {
-        next(error);
-    }
-});
-
-// router.put("/:id", async (req, res, next) => {
-// try {
-// const { error } = productSchema.validate(req.body);
-// if (error) {
-// throw createError(400, error.message);
-// }
-//
-// const { id } = req.params;
-// const result = await productsModel.updateById(id, req.body);
-// if (!result) {
-// throw createError(400);
-// }
-// res.json(result);
-// } catch (error) {
-// next(error);
-// }
-// });
-//
-// router.delete("/:id", async (req, res, next) => {
-// try {
-// const { id } = req.params;
-// const result = await productsModel.removeById(id);
-// if (!result) {
-// throw createError(404);
-// }
-// res.json({ message: "Product deleted" });
-// } catch (error) {
-// next(error);
-// }
-// });
+router.delete("/:id", control.removeById);
 
 module.exports = router;
