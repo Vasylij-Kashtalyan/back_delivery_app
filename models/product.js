@@ -7,31 +7,36 @@ const productSchema = new Schema(
             type: String,
             required: true,
         },
-        products: {
-            type: Array,
-            required: [
-                {
-                    id: {
-                        type: String,
-                        required: true,
-                        unique: true,
-                    },
-                    name: {
-                        type: String,
-                        required: true,
-                    },
-                    description: {
-                        type: String,
-                        required: true,
-                    },
-                    price: {
-                        type: Number,
-                        required: true,
-                    },
+
+        products: [
+            {
+                name: {
+                    type: String,
+                    required: true,
                 },
-            ],
-        },
+                description: {
+                    type: String,
+                    required: true,
+                },
+                price: {
+                    type: Number,
+                    required: true,
+                },
+                totalPrice: {
+                    type: Number,
+                    required: true,
+                },
+                counter: {
+                    type: Number,
+                    required: true,
+                },
+                imageUrl: {
+                    type: String,
+                },
+            },
+        ],
     },
+
     { versionKey: false, timestamps: true }
 );
 
