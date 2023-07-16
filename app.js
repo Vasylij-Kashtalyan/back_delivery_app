@@ -5,6 +5,7 @@ const cors = require("cors"); // cors - для запитів з ішого бр
 const dotenv = require("dotenv");
 dotenv.config();
 
+const authRouter = require("./routes/api/auth");
 const productRouter = require("./routes/api/products");
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(logger(formatsLogger));
 app.use(cors()); // для запитів з ішого браузера
 app.use(express.json()); // Парсер JSON щоб інтерпретувати значення req.body як об'єкт замість рядка
 
+app.use("/api/auth", authRouter);
 app.use("/api/products", productRouter);
 
 app.use((req, res) => {
