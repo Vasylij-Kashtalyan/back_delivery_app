@@ -3,17 +3,6 @@ const { createError } = require("../../helpers");
 
 const bcrypt = require("bcryptjs");
 
-// const hashPassword = async (password) => {
-// const salt = await bcrypt.genSalt(10);
-//
-// const result = await bcrypt.hash(password, salt);
-// console.log(result);
-//
-// const compare = await bcrypt.compare("kelevra22", result);
-// console.log(compare);
-// };
-// hashPassword("kelevra22");
-
 const register = async (req, res) => {
     const { error } = registerSchema.validate(req.body);
 
