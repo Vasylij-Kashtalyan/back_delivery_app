@@ -7,7 +7,12 @@ const {
 const { createError } = require("../../helpers");
 
 const getAll = async (req, res, next) => {
-    const result = await Product.find({}, "-createdAt -updatedAt");
+    const { id: owner } = req.user;
+
+    const result = await Product.find(
+        { owner },
+        "-createdAt -updatedAt"
+    ).populate("owner");
     res.json(result);
 };
 
@@ -27,10 +32,14 @@ const getById = async (req, res, next) => {
 const addProduct = async (req, res, next) => {
     try {
         const { error } = productAddSchema.validate(req.body);
+
         if (error) {
             throw createError(400, error.message);
         }
-        const results = await Product.create(req.body);
+
+        const { id: owner } = req.user;
+        const results = await Product.create({ ...req.body, owner });
+
         res.status(201).json(results);
     } catch (error) {
         next(error);
