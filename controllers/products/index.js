@@ -6,13 +6,24 @@ const {
 
 const { createError } = require("../../helpers");
 
-const getAll = async (req, res, next) => {
-    const { id: owner } = req.user;
+const getAll = async (req, res) => {
+    //параметри запиту після знаку " ? " зберігається в " req.query "
+    //динамічні параметри маршруту після знаку " : " зберігається в " req.params "
+
+    // const { id: owner } = req.user;
+    // const { page = 1, limit = 20 } = req.query;
+
+    // const skip = (page - 1) * limit;
 
     const result = await Product.find(
-        { owner },
+        {},
         "-createdAt -updatedAt"
-    ).populate("owner");
+        // {
+        // skip,
+        // limit: Number(limit),
+        // }
+    ).populate("owner", "name email");
+
     res.json(result);
 };
 
